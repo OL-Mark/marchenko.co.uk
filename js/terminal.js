@@ -99,7 +99,7 @@ class Terminal {
           <div class="about-me">
             <h2>Oleksandr Marchenko</h2>
             <p>Software Developer</p>
-            <p>I'm open to new job opportunities within the Europe.</p>
+            <p>I'm open to new job opportunities within UK and the rest of Europe.</p>
             <p>Feel free to contact me on these services:</p>
             <ul>
               <li>LinkedIn: <a href="https://www.linkedin.com/in/alrmarchenko/" target="_blank">@alrmarchenko</a></li>
