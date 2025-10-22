@@ -11,7 +11,8 @@ class Terminal {
     this.init();
   }
 
-  init() {
+  async init() {
+    await this.showMOTD();
     this.createNewLine();
     this.focus();
 
@@ -59,7 +60,7 @@ class Terminal {
       this.navigateHistory(1);
     } else if (e.key === 'Tab') {
       e.preventDefault();
-      this.handleTabCompletion(input.value);
+      this.handleTabCompletion(input);
     }
   }
 
@@ -92,6 +93,11 @@ class Terminal {
     switch (command.toLowerCase()) {
       case 'ls':
         output.innerHTML = this.files.map(file => `<div>${file}</div>`).join('');
+        break;
+
+      case 'cat':
+        output.className = 'error';
+        output.textContent = 'cat: missing file operand';
         break;
 
       case 'cat about-me.html':
@@ -153,9 +159,34 @@ class Terminal {
   }
 
   handleTabCompletion(input) {
+    if (!input || !input.value) {
+      return;
+    }
+
     const inputValue = input.value.toLowerCase();
+
     if (inputValue === '' || inputValue === 'cat ') {
-      input.value = 'cat about-me';
+      // If no input or just 'cat ', suggest the first file
+      input.value = 'cat about-me.html';
+    } else if (inputValue.startsWith('cat ')) {
+      // If user has typed 'cat ' and part of a filename, try to complete it
+      const partialFilename = inputValue.substring(4).toLowerCase();
+
+      // Find matching files
+      const matches = this.files.filter(file =>
+        file.toLowerCase().startsWith(partialFilename)
+      );
+
+      if (matches.length === 1) {
+        // If only one match, complete it
+        input.value = `cat ${matches[0]}`;
+      } else if (matches.length > 1) {
+        // If multiple matches, show them
+        const output = document.createElement('div');
+        output.className = 'output';
+        output.innerHTML = matches.map(file => `<div>${file}</div>`).join('');
+        this.content.appendChild(output);
+      }
     }
   }
 
@@ -199,6 +230,37 @@ class Terminal {
         this.content.appendChild(outputElement);
         this.createNewLine();
       });
+  }
+
+  async showMOTD() {
+    const motd = document.createElement('div');
+    motd.className = 'motd';
+
+    const currentTime = new Date().toLocaleString();
+    const visitorIP = await this.getVisitorIP();
+
+    motd.innerHTML = `
+      <div class="motd-header">Welcome to Oleksandr Marchenko's homepage</div>
+      <div class="motd-info">
+        <div>Last login: ${currentTime}</div>
+        <div>Visitor IP: ${visitorIP}</div>
+        <div>System: Pseudo Linux Terminal Interface</div>
+        <div>Type 'help' for available commands</div>
+      </div>
+      <div class="motd-separator">────────────────────────────────────────</div>
+    `;
+
+    this.content.appendChild(motd);
+  }
+
+  async getVisitorIP() {
+    try {
+      const response = await fetch('https://api.ipify.org?format=json');
+      const data = await response.json();
+      return data.ip;
+    } catch (error) {
+      return 'Unable to detect';
+    }
   }
 
   scrollToBottom() {

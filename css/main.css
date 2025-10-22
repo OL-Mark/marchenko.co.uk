@@ -169,3 +169,34 @@ body {
 .terminal-body::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.motd {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #111;
+  border-left: 3px solid #00ff00;
+  border-radius: 3px;
+}
+
+.motd-header {
+  color: #00ff00;
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.motd-info {
+  color: #00aaff;
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+
+.motd-info div {
+  margin: 3px 0;
+}
+
+.motd-separator {
+  color: #666;
+  font-family: monospace;
+  margin-top: 10px;
+}
