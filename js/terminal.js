@@ -240,12 +240,10 @@ class Terminal {
     const visitorIP = await this.getVisitorIP();
 
     motd.innerHTML = `
-      <div class="motd-header">Welcome to Oleksandr Marchenko's homepage</div>
+      <div class="motd-header">Hello adventurer!</div>
       <div class="motd-info">
         <div>Last login: ${currentTime}</div>
         <div>Visitor IP: ${visitorIP}</div>
-        <div>System: Pseudo Linux Terminal Interface</div>
-        <div>Type 'help' for available commands</div>
       </div>
       <div class="motd-separator">────────────────────────────────────────</div>
     `;
