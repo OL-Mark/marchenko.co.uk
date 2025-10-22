@@ -22,7 +22,7 @@ class Terminal {
 
     const prompt = document.createElement('span');
     prompt.className = 'prompt';
-    prompt.textContent = '/home/visitor:~$ ';
+    prompt.textContent = 'visitor:~$ ';
 
     const input = document.createElement('input');
     input.className = 'command-input';
