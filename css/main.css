@@ -1,0 +1,171 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #1a1a1a;
+  font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+  color: #00ff00;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.terminal {
+  width: 90%;
+  max-width: 800px;
+  height: 80vh;
+  background-color: #000;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 255, 0, 0.3);
+  overflow: hidden;
+}
+
+.terminal-header {
+  background-color: #2d2d2d;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #333;
+}
+
+.terminal-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.btn {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.btn.close {
+  background-color: #ff5f56;
+}
+
+.btn.minimize {
+  background-color: #ffbd2e;
+}
+
+.btn.maximize {
+  background-color: #27ca3f;
+}
+
+.terminal-title {
+  color: #fff;
+  font-size: 12px;
+  margin-left: 12px;
+}
+
+.terminal-body {
+  height: calc(100% - 40px);
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.terminal-content {
+  height: 100%;
+}
+
+.terminal-line {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2px;
+  min-height: 20px;
+  white-space: nowrap;
+}
+
+
+.prompt {
+  color: #00ff00;
+  font-weight: bold;
+  margin: 0 0.5em 0 0;
+}
+
+
+.command-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #00ff00;
+  font-family: inherit;
+  font-size: inherit;
+  flex: 1;
+  caret-color: #00ff00;
+}
+
+.output {
+  color: #00ff00;
+  margin: 5px 0;
+  white-space: pre-wrap;
+}
+
+.error {
+  color: #ff4444;
+}
+
+.success {
+  color: #00ff00;
+}
+
+.about-me {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #111;
+  border-left: 3px solid #00ff00;
+  border-radius: 3px;
+}
+
+.about-me h2 {
+  color: #00ff00;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.about-me p {
+  margin: 5px 0;
+  line-height: 1.4;
+}
+
+.about-me a {
+  color: #00aaff;
+  text-decoration: none;
+}
+
+.about-me a:hover {
+  color: #00ff00;
+  text-decoration: underline;
+}
+
+.about-me ul {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.about-me li {
+  margin: 5px 0;
+}
+
+/* Scrollbar styling */
+.terminal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.terminal-body::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+.terminal-body::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+.terminal-body::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
