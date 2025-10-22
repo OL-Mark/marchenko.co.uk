@@ -104,11 +104,16 @@ class Terminal {
         this.loadFileContent('README.txt', output);
         break;
 
+      case 'pwd':
+        output.textContent = '/home/visitor';
+        break;
+
       case 'help':
         output.innerHTML = `
           <div>Available commands:</div>
           <div>  ls - List files</div>
           <div>  cat &lt;filename&gt; - Display file content</div>
+          <div>  pwd - Show current directory</div>
           <div>  help - Show this help message</div>
           <div>  clear - Clear terminal</div>
         `;
