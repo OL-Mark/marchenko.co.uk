@@ -4,6 +4,10 @@ class Terminal {
     this.currentLine = null;
     this.commandHistory = [];
     this.historyIndex = -1;
+    this.files = [
+      'about-me.html',
+      'README.txt'
+    ];
     this.init();
   }
 
@@ -87,34 +91,24 @@ class Terminal {
 
     switch (command.toLowerCase()) {
       case 'ls':
-        output.innerHTML = `
-          <div>about-me.txt</div>
-        `;
+        output.innerHTML = this.files.map(file => `<div>${file}</div>`).join('');
         break;
 
-      case 'cat about-me':
-      case 'cat about-me.txt':
-      case 'cat ./about-me.txt':
-        output.innerHTML = `
-          <div class="about-me">
-            <h2>Oleksandr Marchenko</h2>
-            <p>Software Developer</p>
-            <p>I'm open to new job opportunities within the UK and the rest of Europe.</p>
-            <p>Feel free to contact me on these services:</p>
-            <ul>
-              <li>LinkedIn: <a href="https://www.linkedin.com/in/alrmarchenko/" target="_blank">@alrmarchenko</a></li>
-              <li>Facebook: <a href="https://www.facebook.com/olek.marchenko" target="_blank">@olek.marchenko</a></li>
-              <li>Mastodon: <a href="https://mastodon.social/@olmark" target="_blank">@olmark</a></li>
-            </ul>
-          </div>
-        `;
+      case 'cat about-me.html':
+      case 'cat ./about-me.html':
+        this.loadFileContent('about-me.html', output);
+        break;
+
+      case 'cat readme.txt':
+      case 'cat ./readme.txt':
+        this.loadFileContent('README.txt', output);
         break;
 
       case 'help':
         output.innerHTML = `
           <div>Available commands:</div>
           <div>  ls - List files</div>
-          <div>  cat about-me.txt - Display about-me content</div>
+          <div>  cat &lt;filename&gt; - Display file content</div>
           <div>  help - Show this help message</div>
           <div>  clear - Clear terminal</div>
         `;
@@ -167,6 +161,40 @@ class Terminal {
     }
   }
 
+
+  loadFileContent(filename, outputElement) {
+    fetch(`files/${filename}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`File not found: ${filename}`);
+        }
+        return response.text();
+      })
+      .then(content => {
+        if (filename.endsWith('.html')) {
+          // Extract content from HTML file
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(content, 'text/html');
+          const aboutMeDiv = doc.querySelector('.about-me');
+          if (aboutMeDiv) {
+            outputElement.innerHTML = aboutMeDiv.outerHTML;
+          } else {
+            outputElement.innerHTML = `<div class="error">Could not parse HTML content</div>`;
+          }
+        } else {
+          // Display text content as-is
+          outputElement.innerHTML = `<pre>${content}</pre>`;
+        }
+        this.content.appendChild(outputElement);
+        this.createNewLine();
+      })
+      .catch(error => {
+        outputElement.className = 'error';
+        outputElement.textContent = error.message;
+        this.content.appendChild(outputElement);
+        this.createNewLine();
+      });
+  }
 
   scrollToBottom() {
     this.content.scrollTop = this.content.scrollHeight;
